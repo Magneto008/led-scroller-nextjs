@@ -1,10 +1,25 @@
 import { NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic';
 
-let message = 'Hello World';
+class TextManager {
+  private static text: string;
+  constructor(text: string) {
+    TextManager.text = text;
+  }
+
+  static getText() {
+    return this.text;
+  }
+
+  static setText(text: string) {
+    this.text = text;
+  }
+}
+
+TextManager.setText('Hello World');
 
 export async function GET() {
-  return new Response(message, {
+  return new Response(TextManager.getText(), {
     headers: {
       'Content-Type': 'text/plain',
     },
@@ -12,11 +27,19 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const text = await request.json();
-  //TODO: update
-  message = text;
+  try {
+    const text = await request.json();
+    //TODO: update
+    const message = text.slice(0, 100);
+    TextManager.setText(message);
 
-  return Response.json('text updated successfully', {
-    status: 200,
-  });
+    return Response.json('text updated successfully', {
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    return Response.json('error', {
+      status: 500,
+    });
+  }
 }
