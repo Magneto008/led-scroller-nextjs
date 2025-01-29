@@ -22,7 +22,7 @@ export function Button({
       : 'bg-black text-white hover:bg-black/90'
   );
 
-  let inner = <span className="relative top-px">{children}</span>;
+  const inner = <span className="relative top-px">{children}</span>;
 
   if (typeof props.href === 'undefined') {
     return (

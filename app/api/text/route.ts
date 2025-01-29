@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 
 let message = 'Hello World';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   return new Response(message, {
     headers: {
       'Content-Type': 'text/plain',
