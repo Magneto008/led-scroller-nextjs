@@ -18,6 +18,7 @@ class TextManager {
 
 TextManager.setText('Hello World');
 
+//ESP 32 la vapraycha ahe   
 export async function GET() {
   return new Response(TextManager.getText(), {
     headers: {

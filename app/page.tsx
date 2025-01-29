@@ -75,7 +75,10 @@ export default function Home() {
         <h1 className="text-3xl">
           <span className="relative text-emerald-500">
             L
-            <span className="absolute inset-0 text-emerald-400 [filter:blur(3px)] mix-blend-screen scale-110">
+            <span
+              className="absolute animate-pulse inset-0 text-emerald-400 [filter:blur(3px)] mix-blend-screen scale-110 select-none"
+              aria-hidden="true"
+            >
               L
             </span>
           </span>
@@ -98,7 +101,7 @@ export default function Home() {
           name="text"
           type="text"
           placeholder={`max ${LIMIT} characters`} //Input placehodelr
-          className="block w-full bg-transparent placeholder:text-zinc-400 placeholder:italic focus:outline focus:outline-0 sm:text-sm/6"
+          className="block w-full bg-transparent placeholder:text-zinc-400 placeholder:text-xs placeholder:italic focus:outline focus:outline-0 sm:text-sm/6"
           required
           autoComplete="off"
           maxLength={LIMIT}
