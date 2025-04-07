@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server";
-export const dynamic = "force-dynamic";
-import Message from "../../lib/queries";
-import { cookies as next_cookies } from "next/headers";
-import { cookieTokenKey } from "@/app/constants";
+import { NextRequest } from 'next/server';
+export const dynamic = 'force-dynamic';
+import Message from '../../lib/queries';
+import { cookies as next_cookies } from 'next/headers';
+import { cookieTokenKey } from '@/app/constants';
 
 const MESSAGE_TOKEN = process.env.MESSAGE_TOKEN;
 
@@ -12,27 +12,33 @@ const getMessage = async () => {
 
 //ESP 32 la vapraycha ahe
 export async function GET(request: NextRequest) {
-  const message = await getMessage();
-  const headersToken = request.headers
-    .get("Authorization")
-    ?.replace("Bearer ", "");
+  try {
+    const message = await getMessage();
+    const headersToken = request.headers
+      .get('Authorization')
+      ?.replace('Bearer ', '');
 
-  const cookies = await next_cookies();
-  const cookieToken = cookies.get(cookieTokenKey)?.value;
-  const arr = [cookieToken, headersToken];
+    const cookies = await next_cookies();
+    const cookieToken = cookies.get(cookieTokenKey)?.value;
+    const arr = [cookieToken, headersToken];
 
-  if (!arr.includes(MESSAGE_TOKEN)) {
-    return Response.json("Unauthorized", {
-      status: 400,
+    if (!arr.includes(MESSAGE_TOKEN)) {
+      return Response.json('Unauthorized', {
+        status: 400,
+      });
+    }
+
+    //TODO: check headers or cookie
+    return new Response(message?.[0]?.title || 'Message not set.', {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  } catch (error) {
+    return Response.json(JSON.stringify(error), {
+      status: 500,
     });
   }
-
-  //TODO: check headers or cookie
-  return new Response(message?.[0]?.title || "Message not set.", {
-    headers: {
-      "Content-Type": "text/plain",
-    },
-  });
 }
 
 export async function POST(request: NextRequest) {
@@ -51,7 +57,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.log(error);
-    return Response.json("error", {
+    return Response.json('error', {
       status: 500,
     });
   }
