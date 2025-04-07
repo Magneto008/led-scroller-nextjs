@@ -7,14 +7,10 @@ import dbConnect from "@/app/lib/db";
 
 const MESSAGE_TOKEN = process.env.MESSAGE_TOKEN;
 
-const getMessage = async () => {
-  return Message.find();
-};
-
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
-    const message = await getMessage();
+    const message = await Message.find();
     const headersToken = request.headers
       .get("Authorization")
       ?.replace("Bearer ", "");
