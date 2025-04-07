@@ -14,9 +14,6 @@ const getMessage = async () => {
 export async function GET(request: NextRequest) {
   try {
     const message = await getMessage();
-    return Response.json(message, {
-      status: 500,
-    });
     const headersToken = request.headers
       .get('Authorization')
       ?.replace('Bearer ', '');
@@ -31,7 +28,6 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    //TODO: check headers or cookie
     return new Response(message?.[0]?.title || 'Message not set.', {
       headers: {
         'Content-Type': 'text/plain',
