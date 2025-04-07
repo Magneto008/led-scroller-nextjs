@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeOff } from "lucide-react";
@@ -47,6 +47,10 @@ export function LoginForm({
       },
     });
   }
+
+  useEffect(() => {
+    router.prefetch("/");
+  }, [router]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
