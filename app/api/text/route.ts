@@ -14,6 +14,9 @@ const getMessage = async () => {
 export async function GET(request: NextRequest) {
   try {
     const message = await getMessage();
+    return Response.json(message, {
+      status: 500,
+    });
     const headersToken = request.headers
       .get('Authorization')
       ?.replace('Bearer ', '');
