@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
   const user = users.find((user) => user?.email === email);
   if (!user || user?.password !== password) return badRequest();
-  const cookie = `${cookieTokenKey}=${MESSAGE_TOKEN}; HttpOnly; Secure; Path=/; Max-Age=3600; SameSite=Strict`;
+  const cookie = `${cookieTokenKey}=${MESSAGE_TOKEN}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict`;
 
   return Response.json(
     {
